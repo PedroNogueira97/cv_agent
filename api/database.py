@@ -2,8 +2,8 @@ import os
 import sqlite3
 from passlib.context import CryptContext
 
-DB_DIR = os.getenv("DATABASE_DIR", os.path.join(os.path.dirname(os.path.dirname(__file__)), "data"))
-USER_DB_FILE = os.path.join(DB_DIR, os.getenv("DATABASE_FILENAME", "cv_agent.db"))
+DB_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
+USER_DB_FILE = os.path.join(DB_DIR, "cv_agent.db")
 
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
