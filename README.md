@@ -1,23 +1,23 @@
-# 📄 CV Agent — RH Intelligence
+# 📄 CV Agent — RH Intelligence (API Backend)
 
-CV Agent é um ecossistema inteligente para recrutamento e seleção, construído com **FastAPI**, **Streamlit** e o framework **Agno (Phidata)**. Ele permite analisar a compatibilidade de perfis profissionais com vagas de emprego, gerando insights baseados em IA e currículos personalizados.
+Este repositório contém a **API de Backend** do CV Agent, um ecossistema inteligente para recrutamento e seleção construído com **FastAPI** e o framework **Agno (Phidata)**. Ele fornece inteligência artificial para análise de currículos, busca de informações de mercado e gerenciamento de perfis.
 
-O projeto utiliza uma arquitetura moderna e desacoplada, separando completamente a lógica de backend (API) da interface de usuário (Frontend).
+O frontend deste projeto foi movido para um repositório separado para garantir uma arquitetura de microserviços escalável.
 
-## 🚀 Funcionalidades
+## 🚀 Funcionalidades da API
 
-- **🔐 Autenticação Segura**: Sistema de Login e Cadastro utilizando **JWT (JSON Web Tokens)** e hashing de senhas com **Bcrypt**.
-- **🧠 Agente de RH Inteligente**: Agente Agno configurado com modelos da OpenAI para analisar currículos e descrições de vagas.
-- **🌐 Busca em Tempo Real**: Integração com **Tavily Search** para coletar informações atualizadas sobre o mercado.
-- **👤 Perfis Isolados**: Memória e histórico de chat persistidos de forma privada para cada usuário em um banco de dados **SQLite**.
-- **🛡️ Segurança de Produção**: Rate Limiting (SlowAPI) integrado para prevenir abusos e CORS configurado.
+- **🔐 Autenticação Segura**: Gerenciamento de usuários com **JWT (JSON Web Tokens)** e hashing de senhas com **Bcrypt**.
+- **🧠 Agente de RH Inteligente**: Endpoints que utilizam agentes Agno para analisar compatibilidade de currículos com vagas.
+- **🌐 Integração de Busca**: Coleta de dados em tempo real via **Tavily Search API**.
+- **👤 Persistência de Dados**: Armazenamento isolado de perfis e histórico de chat via **SQLite**.
+- **🛡️ Pronta para Produção**: Inclui Rate Limiting (SlowAPI), Logs estruturados e suporte a variáveis de ambiente seguras.
 
 ## 🛠️ Stack Técnica
 
-- **Backend**: FastAPI, SQLAlchemy, Pydantic, Passlib, PyJWT, SlowAPI.
-- **Frontend**: Streamlit, Requests.
-- **IA/Agent**: Agno Framework, OpenAI.
-- **Database**: SQLite3.
+- **Framework**: FastAPI
+- **Segurança**: PyJWT, Passlib (Bcrypt), SlowAPI
+- **IA/Agent**: Agno Framework, OpenAI
+- **Banco de Dados**: SQLite3 (SQLAlchemy)
 
 ## 📋 Pré-requisitos
 
@@ -47,7 +47,6 @@ O projeto utiliza uma arquitetura moderna e desacoplada, separando completamente
    # API Keys
    OPENAI_API_KEY=sua_chave_aqui
    TAVILY_API_KEY=sua_chave_aqui
-   HF_TOKEN=sua_chave_huggingface
 
    # Segurança Backend
    JWT_SECRET=gere_uma_chave_segura (ex: openssl rand -hex 32)
@@ -58,48 +57,39 @@ O projeto utiliza uma arquitetura moderna e desacoplada, separando completamente
 
 ## 🏃 Como Rodar
 
-O projeto requer dois terminais ativos:
-
-### 1. Iniciar o Backend (API)
+Para iniciar o servidor de API:
 
 ```bash
 PYTHONPATH=. python run_backend.py
 ```
 
-A API estará disponível em `http://localhost:8000`. Você pode acessar a documentação interativa (Swagger) em `http://localhost:8000/docs`.
-
-### 2. Iniciar o Frontend (Streamlit)
-
-```bash
-streamlit run app.py
-```
-
-A interface abrirá automaticamente no seu navegador em `http://localhost:8501`.
+- **URL Base**: `http://localhost:8000`
+- **Documentação de API (Swagger)**: `http://localhost:8000/docs`
+- **Documentação Alternativa (Redoc)**: `http://localhost:8000/redoc`
 
 ## 📂 Estrutura do Projeto
 
 ```text
 cv_agent/
-├── api/                # Backend layer (FastAPI)
-│   ├── routes/         # Endpoints de Auth, Chat e Profile
-│   ├── auth.py         # Lógica de JWT e Segurança
-│   ├── database.py     # Conexão e Queries SQLite
-│   └── main.py         # Configuração do App FastAPI
-├── agent.py            # Lógica do Agente Agno
-├── app.py              # Frontend layer (Streamlit)
-├── run_backend.py      # Wrapper para execução facilitada do backend
+├── api/                # Lógica da API (FastAPI)
+│   ├── routes/         # Endpoints: /auth, /chat, /profile
+│   ├── auth.py         # Segurança e Tokens JWT
+│   ├── database.py     # Camada de Dados (SQLite)
+│   └── main.py         # Configuração da Aplicação
+├── agent.py            # Definição do Agente Inteligente (Agno)
+├── run_backend.py      # Script de inicialização
 ├── data/               # Banco de Dados (Ignorado pelo Git)
 └── requirements.txt    # Dependências do projeto
 ```
 
 ## 🛡️ Segurança
 
-Este projeto foi auditado para seguir boas práticas de deploy de SaaS, incluindo:
+Este backend implementa:
 
-- Hash de senhas.
-- Expiração de Tokens.
-- Proteção contra SQL Injection e Prompt Injection.
-- Isolamento total de sessões por `user_id`.
+- Hashing de senhas.
+- Expiração de tokens de acesso.
+- Validação estrita de tipos com Pydantic.
+- Isolamento de dados por usuário baseado no `username` extraído do JWT.
 
 ---
 Desenvolvido com ❤️ por Pedro Nogueira.
