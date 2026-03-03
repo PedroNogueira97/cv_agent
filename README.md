@@ -16,7 +16,7 @@ O projeto utiliza uma arquitetura moderna e desacoplada, separando completamente
 
 - **Backend**: FastAPI, SQLAlchemy, Pydantic, Passlib, PyJWT, SlowAPI.
 - **Frontend**: Streamlit, Requests.
-- **IA/Agent**: Agno Framework, OpenAI GPT-4o-mini.
+- **IA/Agent**: Agno Framework, OpenAI.
 - **Database**: SQLite3.
 
 ## 📋 Pré-requisitos
